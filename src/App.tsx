@@ -41,8 +41,6 @@ export default function App() {
   };
 
   const onSave = (updatedItem: Item) => {
-    console.log("onSave");
-
     if (items) {
       setItems(
         items.map((item) =>
@@ -55,17 +53,14 @@ export default function App() {
   };
 
   const onOpen = useCallback((item: Item) => {
-    console.log("onOpen");
     setSelectedItem(item);
     setOpen(true); // open dialog window
   }, []);
 
-  renderCount++;
-
   return (
     <div className="App">
-      <h2>Parent Render Count: {renderCount}</h2>
-      <h3>Click to rename....</h3>
+      <h5>Parent Render Count: {renderCount++}</h5>
+      <h3>Click a person to edit...</h3>
 
       <Divider />
       <List>
@@ -77,12 +72,15 @@ export default function App() {
           ))}
       </List>
 
+      {selectedItem && (
       <MyDialog
         open={open}
         onClose={onClose}
         onSave={onSave}
         selectedItem={selectedItem}
       />
+      )}
+
     </div>
   );
 }

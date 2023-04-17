@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 
 import {
   Dialog,
@@ -10,20 +10,23 @@ import {
 
 import { Item } from "./types";
 
+type MyDialogProps = {
+  open: boolean;
+  onClose: () => void;
+  onSave: (item: Item) => void;
+  selectedItem: Item;
+}
+
 let myDialogRenderCounter = 0;
 
-const MyDialog = ({ open, onClose, onSave, selectedItem }) => {
-  // const MyDialog = React.memo(({ open, onClose, onSave, selectedItem }) => {
-  const [editItem, setEditItem] = useState<Item>();
+const MyDialog = ({open, onClose, onSave, selectedItem}: MyDialogProps) => {
+
+  const [editItem, setEditItem] = useState<Item>(selectedItem);
 
   // copy over the value
   useEffect(() => {
     setEditItem(selectedItem);
   }, [selectedItem]);
-
-  if (!editItem) {
-    return;
-  }
 
   const save = () => {
     // validate the fields here
